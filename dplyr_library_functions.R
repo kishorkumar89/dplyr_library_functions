@@ -27,6 +27,15 @@ select(data.DF,S.No,Name)
 select(data.DF,S.No, Salary)
 select(data.DF, Name, Salary)
 
+#select all columns where column name contains 'am'
+select(data.DF,contains('am'))
+
+#select all columns Where Column name statrs with 'S'
+select(data.DF,starts_with('S'))
+
+#select all columns Where Column name ends with 'o'
+select(data.DF,ends_with('o'),starts_with('S'))
+
 #----------------select rows from the data set based on Rows--- Applying filter
 #============================================================
 #select all rows where the Name has NA
@@ -59,4 +68,27 @@ filter(data.DF, Name %in% c("Shyam","Kishor") & Salary > 35)
 
 #select all rows were name is like Shy
 filter(data.DF, Name %in% 'Shy')
+
+# chaining
+
+#find all information of the Customer with the heighest Salary.
+data.DF %>%
+  filter(Salary == max(Salary , na.rm = TRUE))
+
+#find name of the Customer with the heighest Salary.
+data.DF %>%
+  filter(Salary == max(Salary , na.rm = TRUE)) %>%
+  select(Name,row)
+
+# find the second hieghest Salary.
+data.DF %>%
+  filter(Salary < max(Salary , na.rm = TRUE)) %>%
+  filter(Salary == max(Salary , na.rm = TRUE))
+
+
+
+
+
+
+
 
