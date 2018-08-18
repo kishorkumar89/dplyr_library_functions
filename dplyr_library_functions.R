@@ -85,10 +85,93 @@ data.DF %>%
   filter(Salary < max(Salary , na.rm = TRUE)) %>%
   filter(Salary == max(Salary , na.rm = TRUE))
 
+#---------------------------------ARRANGE-----------------------------------
+#sort the Emp table by Name in Ascending Order
+data.DF %>%
+  arrange(Name)
+
+#sort the Emp table by Name in descending Order
+data.DF %>%
+  arrange(desc(Name))
+
+#sort the Emp table by Name in Ascending Order removing NAs
+data.DF %>%
+  filter(!is.na(Name)) %>%
+  arrange(Name)
+
+#sort the Emp table by Name in Descending Order removing NAs
+
+data.DF %>%
+  filter(!is.na(Name)) %>%
+  arrange(desc(Name))
+
+##sort the Emp table by Salary in Ascending Order 
+data.DF %>%
+  arrange(Salary)
+
+#sort the Emp table by Salary in Descending Order 
+data.DF %>%
+  arrange(desc(Salary))
+
+#sort the Emp table by Salary in Ascending Order  and remove the NAs in Salary
+data.DF %>%
+  filter(!is.na(Salary)) %>%
+  arrange(Salary)
+
+#sort the Emp table by Salary in Descending Order and remove the NAs in Salary
+data.DF %>%
+  filter(!is.na(Salary)) %>%
+  arrange(desc(Salary))
+
+#sort the Emp table by Salary in Descending Order and remove the NAs for all columns
+data.DF %>%
+  filter(!is.na(Name),!is.na(S.No),!is.na(Salary)) %>%
+  arrange(desc(Salary))
+
+#Add a column with name Salary_in_100s
+data.DF %>%
+  mutate(Salary_in_100s = (Salary/100) )
+
+#Add a column with name Salary_in_100s and remove those columns where where salary is NA
+data.DF %>%
+  na.omit() %>%
+  mutate(Salary_in_100s = Salary/100 )
+
+#add A column Dept in the Table
+data.DF$Dept_Name <- c('A','A','A','B','B','B','C','C','C','D','D','D')
+
+data.DF$Dept_Name <- as.factor(data.DF$Dept_Name)
+
+#Average salary by Department
+data.DF %>%
+  filter(!is.na(Salary)) %>%
+  group_by(Dept_Name) %>%
+  summarise(Avg_by_Dept = sum(Salary)/n())
+
+#select the entire department which has the Height average salary
+data.DF %>%
+  filter(!is.na(Salary)) %>%
+  group_by(Dept_Name) %>%
+  summarise(Avg_by_Dept = sum(Salary)/n()) %>%
+  filter(Avg_by_Dept == max(Avg_by_Dept))
 
 
+#---Check  ---- summarise_each()
+#summarise has two vectors 
+# n() - counts  the number of vectors in a group
+# n_unique() - conunts the number of unique vectors in a group
 
 
+# count the numbet of Depatment  and the number of Employees in a group
+data.DF %>%
+  group_by(Dept_Name) %>%
+  summarise(No_Emps = n())
 
+# count the numbet of Depatment  and the number of Employees in a group 
+#soting groups by Descending order
+data.DF %>%
+  group_by(Dept_Name) %>%
+  summarise(No_Emps = n()) %>%
+  arrange(desc(Dept_Name))
 
 
